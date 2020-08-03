@@ -14,5 +14,5 @@ attributes:
     - name: cis_level
       required: false
       description: 'CIS profile level to audit'
-      value: 2
+      value: 1
       type: numeric
