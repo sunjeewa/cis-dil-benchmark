@@ -66,39 +66,39 @@ control 'cis-dil-benchmark-6.1.2' do
   end
 end
 
-control 'cis-dil-benchmark-6.1.3' do
-  title 'Ensure permissions on /etc/shadow are configured'
-  desc  "The /etc/shadow file is used to store the information about user accounts that is critical to the security of those accounts, such as the hashed password and other security information.\n\nRationale: If attackers can gain read access to the /etc/shadow file, they can easily run a password cracking program against the hashed password to break it. Other security information that is stored in the /etc/shadow file (such as expiration) could also be useful to subvert the user accounts."
-  impact 1.0
+# control 'cis-dil-benchmark-6.1.3' do
+#   title 'Ensure permissions on /etc/shadow are configured'
+#   desc  "The /etc/shadow file is used to store the information about user accounts that is critical to the security of those accounts, such as the hashed password and other security information.\n\nRationale: If attackers can gain read access to the /etc/shadow file, they can easily run a password cracking program against the hashed password to break it. Other security information that is stored in the /etc/shadow file (such as expiration) could also be useful to subvert the user accounts."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:6.1.3'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:6.1.3'
+#   tag level: 1
 
-  shadow_files = ['/etc/shadow']
-  shadow_files << '/usr/share/baselayout/shadow' if file('/etc/nsswitch.conf').content =~ /^shadow:\s+(\S+\s+)*usrfiles/
+#   shadow_files = ['/etc/shadow']
+#   shadow_files << '/usr/share/baselayout/shadow' if file('/etc/nsswitch.conf').content =~ /^shadow:\s+(\S+\s+)*usrfiles/
 
-  expected_gid = 0
-  expected_gid = 42 if os.debian?
+#   expected_gid = 0
+#   expected_gid = 42 if os.debian?
 
-  shadow_files.each do |f|
-    describe file(f) do
-      it { should exist }
-      it { should be_readable.by 'owner' }
-      it { should be_writable.by 'owner' }
-      it { should_not be_executable.by 'owner' }
-      it { should_not be_writable.by 'group' }
-      it { should_not be_executable.by 'group' }
-      it { should_not be_readable.by 'other' }
-      it { should_not be_writable.by 'other' }
-      it { should_not be_executable.by 'other' }
-      its(:uid) { should cmp 0 }
-      its(:gid) { should cmp expected_gid }
-      its(:sticky) { should equal false }
-      its(:suid) { should equal false }
-      its(:sgid) { should equal false }
-    end
-  end
-end
+#   shadow_files.each do |f|
+#     describe file(f) do
+#       it { should exist }
+#       it { should be_readable.by 'owner' }
+#       it { should be_writable.by 'owner' }
+#       it { should_not be_executable.by 'owner' }
+#       it { should_not be_writable.by 'group' }
+#       it { should_not be_executable.by 'group' }
+#       it { should_not be_readable.by 'other' }
+#       it { should_not be_writable.by 'other' }
+#       it { should_not be_executable.by 'other' }
+#       its(:uid) { should cmp 0 }
+#       its(:gid) { should cmp expected_gid }
+#       its(:sticky) { should equal false }
+#       its(:suid) { should equal false }
+#       its(:sgid) { should equal false }
+#     end
+#   end
+# end
 
 control 'cis-dil-benchmark-6.1.4' do
   title 'Ensure permissions on /etc/group are configured'

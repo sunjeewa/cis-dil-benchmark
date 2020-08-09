@@ -103,31 +103,31 @@ control 'cis-dil-benchmark-6.2.5' do
   end
 end
 
-control 'cis-dil-benchmark-6.2.6' do
-  title 'Ensure root PATH Integrity'
-  desc  "The root user can execute any command on the system and could be fooled into executing programs unintentionally if the PATH is not set correctly.\n\nRationale: Including the current working directory (.) or other writable directory in root's executable path makes it likely that an attacker can gain superuser access by forcing an administrator operating as root to execute a Trojan horse program."
-  impact 1.0
+# control 'cis-dil-benchmark-6.2.6' do
+#   title 'Ensure root PATH Integrity'
+#   desc  "The root user can execute any command on the system and could be fooled into executing programs unintentionally if the PATH is not set correctly.\n\nRationale: Including the current working directory (.) or other writable directory in root's executable path makes it likely that an attacker can gain superuser access by forcing an administrator operating as root to execute a Trojan horse program."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:6.2.6'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:6.2.6'
+#   tag level: 1
 
-  root_path = os_env('PATH').split
+#   root_path = os_env('PATH').split
 
-  describe root_path do
-    it { should_not be_empty }
-    it { should_not include '' }
-    it { should_not include '.' }
-  end
+#   describe root_path do
+#     it { should_not be_empty }
+#     it { should_not include '' }
+#     it { should_not include '.' }
+#   end
 
-  root_path.each do |entry|
-    describe file(entry) do
-      it { should be_directory }
-      it { should_not be_writable.by 'group' }
-      it { should_not be_writable.by 'other' }
-      its(:uid) { should cmp 0 }
-    end
-  end
-end
+#   root_path.each do |entry|
+#     describe file(entry) do
+#       it { should be_directory }
+#       it { should_not be_writable.by 'group' }
+#       it { should_not be_writable.by 'other' }
+#       its(:uid) { should cmp 0 }
+#     end
+#   end
+# end
 
 control 'cis-dil-benchmark-6.2.7' do
   title "Ensure all users' home directories exist"

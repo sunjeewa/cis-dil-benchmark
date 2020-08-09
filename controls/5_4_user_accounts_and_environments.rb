@@ -153,30 +153,30 @@ control 'cis-dil-benchmark-5.4.3' do
   end
 end
 
-control 'cis-dil-benchmark-5.4.4' do
-  title 'Ensure default user umask is 027 or more restrictive'
-  desc  "The default umask determines the permissions of files created by users. The user creating the file has the discretion of making their files and directories readable by others via the chmod command. Users who wish to allow their files and directories to be readable by others by default may choose a different default umask by inserting the umask command into the standard shell configuration files (.profile, .bashrc, etc.) in their home directories.\n\nRationale: Setting a very secure default value for umask ensures that users make a conscious choice about their file permissions. A default umask setting of 077 causes files and directories created by users to not be readable by any other user on the system. A umask of 027 would make files and directories readable by users in the same Unix group, while a umask of 022 would make files readable by every user on the system."
-  impact 1.0
+# control 'cis-dil-benchmark-5.4.4' do
+#   title 'Ensure default user umask is 027 or more restrictive'
+#   desc  "The default umask determines the permissions of files created by users. The user creating the file has the discretion of making their files and directories readable by others via the chmod command. Users who wish to allow their files and directories to be readable by others by default may choose a different default umask by inserting the umask command into the standard shell configuration files (.profile, .bashrc, etc.) in their home directories.\n\nRationale: Setting a very secure default value for umask ensures that users make a conscious choice about their file permissions. A default umask setting of 077 causes files and directories created by users to not be readable by any other user on the system. A umask of 027 would make files and directories readable by users in the same Unix group, while a umask of 022 would make files readable by every user on the system."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:5.4.4'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:5.4.4'
+#   tag level: 1
 
-  %w(bash.bashrc profile bashrc).each do |f|
-    describe file("/etc/#{f}") do
-      its(:content) { should_not match(/^\s*umask [01234567](0[7654321]|[7654321][654321])\s*(?:#.*)?$/) }
-    end
-  end
+#   %w(bash.bashrc profile bashrc).each do |f|
+#     describe file("/etc/#{f}") do
+#       its(:content) { should_not match(/^\s*umask [01234567](0[7654321]|[7654321][654321])\s*(?:#.*)?$/) }
+#     end
+#   end
 
-  describe.one do
-    %w(bash.bashrc profile bashrc).each do |f|
-      next unless file("/etc/#{f}").file?
+#   describe.one do
+#     %w(bash.bashrc profile bashrc).each do |f|
+#       next unless file("/etc/#{f}").file?
 
-      describe file("/etc/#{f}") do
-        its(:content) { should match(/^\s*umask [01234567][2367]7\s*(?:#.*)?$/) }
-      end
-    end
-  end
-end
+#       describe file("/etc/#{f}") do
+#         its(:content) { should match(/^\s*umask [01234567][2367]7\s*(?:#.*)?$/) }
+#       end
+#     end
+#   end
+# end
 
 control 'cis-dil-benchmark-5.5' do
   title 'Ensure root login is restricted to system console'
