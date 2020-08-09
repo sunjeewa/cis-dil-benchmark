@@ -115,30 +115,30 @@ control 'cis-dil-benchmark-5.4.1.4' do
   end
 end
 
-control 'cis-dil-benchmark-5.4.2' do
-  title 'Ensure system accounts are non-login'
-  desc  "There are a number of accounts provided with Ubuntu that are used to manage applications and are not intended to provide an interactive shell.\n\nRationale: It is important to make sure that accounts that are not being used by regular users are prevented from being used to provide an interactive shell. By default, Ubuntu sets the password field for these accounts to an invalid string, but it is also recommended that the shell field in the password file be set to /sbin/nologin. This prevents the account from potentially being used to run any commands."
-  impact 1.0
+# control 'cis-dil-benchmark-5.4.2' do
+#   title 'Ensure system accounts are non-login'
+#   desc  "There are a number of accounts provided with Ubuntu that are used to manage applications and are not intended to provide an interactive shell.\n\nRationale: It is important to make sure that accounts that are not being used by regular users are prevented from being used to provide an interactive shell. By default, Ubuntu sets the password field for these accounts to an invalid string, but it is also recommended that the shell field in the password file be set to /sbin/nologin. This prevents the account from potentially being used to run any commands."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:5.4.2'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:5.4.2'
+#   tag level: 1
 
-  uid_min = login_defs.UID_MIN.to_i
+#   uid_min = login_defs.UID_MIN.to_i
 
-  passwd_files.each do |f|
-    passwd(f).where { uid.to_i < uid_min }.entries.each do |user|
-      next if %w(root sync shutdown halt).include? user.user
+#   passwd_files.each do |f|
+#     passwd(f).where { uid.to_i < uid_min }.entries.each do |user|
+#       next if %w(root sync shutdown halt).include? user.user
 
-      describe user do
-        its(:shell) { should match(%r{(/usr/sbin/nologin|/sbin/nologin|/bin/false)}) }
-      end
+#       describe user do
+#         its(:shell) { should match(%r{(/usr/sbin/nologin|/sbin/nologin|/bin/false)}) }
+#       end
 
-      describe shadow(user.user) do
-        its(:passwords) { should be_all { |m| m == '*' } }
-      end
-    end
-  end
-end
+#       describe shadow(user.user) do
+#         its(:passwords) { should be_all { |m| m == '*' } }
+#       end
+#     end
+#   end
+# end
 
 control 'cis-dil-benchmark-5.4.3' do
   title 'Ensure default group for the root account is GID 0'
