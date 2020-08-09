@@ -217,32 +217,32 @@ end
 #   end
 # end
 
-control 'cis-dil-benchmark-6.1.8' do
-  title 'Ensure permissions on /etc/group- are configured'
-  desc  "The /etc/group- file contains a backup list of all the valid groups defined in the system.\n\nRationale: It is critical to ensure that the /etc/group- file is protected from unauthorized access. Although it is protected by default, the file permissions could be changed either inadvertently or through malicious actions."
-  impact 1.0
+# control 'cis-dil-benchmark-6.1.8' do
+#   title 'Ensure permissions on /etc/group- are configured'
+#   desc  "The /etc/group- file contains a backup list of all the valid groups defined in the system.\n\nRationale: It is critical to ensure that the /etc/group- file is protected from unauthorized access. Although it is protected by default, the file permissions could be changed either inadvertently or through malicious actions."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:6.1.8'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:6.1.8'
+#   tag level: 1
 
-  describe file('/etc/group-') do
-    it { should exist }
-    it { should be_readable.by 'owner' }
-    it { should be_writable.by 'owner' }
-    it { should_not be_executable.by 'owner' }
-    it { should be_readable.by 'group' }
-    it { should_not be_writable.by 'group' }
-    it { should_not be_executable.by 'group' }
-    it { should be_readable.by 'other' }
-    it { should_not be_writable.by 'other' }
-    it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
-    its(:sticky) { should equal false }
-    its(:suid) { should equal false }
-    its(:sgid) { should equal false }
-  end
-end
+#   describe file('/etc/group-') do
+#     it { should exist }
+#     it { should be_readable.by 'owner' }
+#     it { should be_writable.by 'owner' }
+#     it { should_not be_executable.by 'owner' }
+#     it { should be_readable.by 'group' }
+#     it { should_not be_writable.by 'group' }
+#     it { should_not be_executable.by 'group' }
+#     it { should be_readable.by 'other' }
+#     it { should_not be_writable.by 'other' }
+#     it { should_not be_executable.by 'other' }
+#     its(:uid) { should cmp 0 }
+#     its(:gid) { should cmp 0 }
+#     its(:sticky) { should equal false }
+#     its(:suid) { should equal false }
+#     its(:sgid) { should equal false }
+#   end
+# end
 
 # control 'cis-dil-benchmark-6.1.9' do
 #   title 'Ensure permissions on /etc/gshadow- are configured'
