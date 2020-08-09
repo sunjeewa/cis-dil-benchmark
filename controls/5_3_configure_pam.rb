@@ -102,19 +102,19 @@ control 'cis-dil-benchmark-5.3.3' do
   end
 end
 
-control 'cis-dil-benchmark-5.3.4' do
-  title 'Ensure password hashing algorithm is SHA-512'
-  desc  "The commands below change password encryption from md5 to sha512 (a much stronger hashing algorithm). All existing accounts will need to perform a password change to upgrade the stored hashes to the new algorithm.\n\nRationale: The SHA-512 algorithm provides much stronger hashing than MD5, thus providing additional protection to the system by increasing the level of effort for an attacker to successfully determine passwords. Note that these change only apply to accounts configured on the local system."
-  impact 0.0
+# control 'cis-dil-benchmark-5.3.4' do
+#   title 'Ensure password hashing algorithm is SHA-512'
+#   desc  "The commands below change password encryption from md5 to sha512 (a much stronger hashing algorithm). All existing accounts will need to perform a password change to upgrade the stored hashes to the new algorithm.\n\nRationale: The SHA-512 algorithm provides much stronger hashing than MD5, thus providing additional protection to the system by increasing the level of effort for an attacker to successfully determine passwords. Note that these change only apply to accounts configured on the local system."
+#   impact 0.0
 
-  tag cis: 'distribution-independent-linux:5.3.4'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:5.3.4'
+#   tag level: 1
 
-  describe.one do
-    %w(common-password system-auth password-auth).each do |f|
-      describe file("/etc/pam.d/#{f}") do
-        its(:content) { should match(/^password(\s+\S+\s+)+pam_unix\.so\s+(\S+\s+)*sha512/) }
-      end
-    end
-  end
-end
+#   describe.one do
+#     %w(common-password system-auth password-auth).each do |f|
+#       describe file("/etc/pam.d/#{f}") do
+#         its(:content) { should match(/^password(\s+\S+\s+)+pam_unix\.so\s+(\S+\s+)*sha512/) }
+#       end
+#     end
+#   end
+# end
