@@ -146,26 +146,26 @@ control 'cis-dil-benchmark-6.2.7' do
   end
 end
 
-control 'cis-dil-benchmark-6.2.8' do
-  title "Ensure users' home directories permissions are 750 or more restrictive"
-  desc  "While the system administrator can establish secure permissions for users' home directories, the users can easily override these.\n\nRationale: Group or world-writable user home directories may enable malicious users to steal or modify other users' data or to gain another user's system privileges."
-  impact 1.0
+# control 'cis-dil-benchmark-6.2.8' do
+#   title "Ensure users' home directories permissions are 750 or more restrictive"
+#   desc  "While the system administrator can establish secure permissions for users' home directories, the users can easily override these.\n\nRationale: Group or world-writable user home directories may enable malicious users to steal or modify other users' data or to gain another user's system privileges."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:6.2.8'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:6.2.8'
+#   tag level: 1
 
-  passwd_files.each do |f|
-    passwd(f).where { uid.to_i >= uid_min }.where { shell !~ %r{^(/usr/sbin/nologin|/sbin/nologin|/bin/false)$} }.homes.each do |h|
-      describe file(h) do
-        it { should exist }
-        it { should_not be_writable.by 'group' }
-        it { should_not be_readable.by 'other' }
-        it { should_not be_writable.by 'other' }
-        it { should_not be_executable.by 'other' }
-      end
-    end
-  end
-end
+#   passwd_files.each do |f|
+#     passwd(f).where { uid.to_i >= uid_min }.where { shell !~ %r{^(/usr/sbin/nologin|/sbin/nologin|/bin/false)$} }.homes.each do |h|
+#       describe file(h) do
+#         it { should exist }
+#         it { should_not be_writable.by 'group' }
+#         it { should_not be_readable.by 'other' }
+#         it { should_not be_writable.by 'other' }
+#         it { should_not be_executable.by 'other' }
+#       end
+#     end
+#   end
+# end
 
 control 'cis-dil-benchmark-6.2.9' do
   title 'Ensure users own their home directories'

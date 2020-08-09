@@ -132,39 +132,39 @@ control 'cis-dil-benchmark-6.1.4' do
   end
 end
 
-control 'cis-dil-benchmark-6.1.5' do
-  title 'Ensure permissions on /etc/gshadow are configured'
-  desc  "The /etc/gshadow file is used to store the information about groups that is critical to the security of those accounts, such as the hashed password and other security information.\n\nRationale: If attackers can gain read access to the /etc/gshadow file, they can easily run a password cracking program against the hashed password to break it. Other security information that is stored in the /etc/gshadow file (such as group administrators) could also be useful to subvert the group."
-  impact 1.0
+# control 'cis-dil-benchmark-6.1.5' do
+#   title 'Ensure permissions on /etc/gshadow are configured'
+#   desc  "The /etc/gshadow file is used to store the information about groups that is critical to the security of those accounts, such as the hashed password and other security information.\n\nRationale: If attackers can gain read access to the /etc/gshadow file, they can easily run a password cracking program against the hashed password to break it. Other security information that is stored in the /etc/gshadow file (such as group administrators) could also be useful to subvert the group."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:6.1.5'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:6.1.5'
+#   tag level: 1
 
-  gshadow_files = ['/etc/gshadow']
-  gshadow_files << '/usr/share/baselayout/gshadow' if file('/etc/nsswitch.conf').content =~ /^gshadow:\s+(\S+\s+)*usrfiles/
+#   gshadow_files = ['/etc/gshadow']
+#   gshadow_files << '/usr/share/baselayout/gshadow' if file('/etc/nsswitch.conf').content =~ /^gshadow:\s+(\S+\s+)*usrfiles/
 
-  expected_gid = 0
-  expected_gid = 42 if os.debian?
+#   expected_gid = 0
+#   expected_gid = 42 if os.debian?
 
-  gshadow_files.each do |f|
-    describe file(f) do
-      it { should exist }
-      it { should be_readable.by 'owner' }
-      it { should be_writable.by 'owner' }
-      it { should_not be_executable.by 'owner' }
-      it { should_not be_writable.by 'group' }
-      it { should_not be_executable.by 'group' }
-      it { should_not be_readable.by 'other' }
-      it { should_not be_writable.by 'other' }
-      it { should_not be_executable.by 'other' }
-      its(:uid) { should cmp 0 }
-      its(:gid) { should cmp expected_gid }
-      its(:sticky) { should equal false }
-      its(:suid) { should equal false }
-      its(:sgid) { should equal false }
-    end
-  end
-end
+#   gshadow_files.each do |f|
+#     describe file(f) do
+#       it { should exist }
+#       it { should be_readable.by 'owner' }
+#       it { should be_writable.by 'owner' }
+#       it { should_not be_executable.by 'owner' }
+#       it { should_not be_writable.by 'group' }
+#       it { should_not be_executable.by 'group' }
+#       it { should_not be_readable.by 'other' }
+#       it { should_not be_writable.by 'other' }
+#       it { should_not be_executable.by 'other' }
+#       its(:uid) { should cmp 0 }
+#       its(:gid) { should cmp expected_gid }
+#       its(:sticky) { should equal false }
+#       its(:suid) { should equal false }
+#       its(:sgid) { should equal false }
+#     end
+#   end
+# end
 
 control 'cis-dil-benchmark-6.1.6' do
   title 'Ensure permissions on /etc/passwd- are configured'
@@ -191,31 +191,31 @@ control 'cis-dil-benchmark-6.1.6' do
   end
 end
 
-control 'cis-dil-benchmark-6.1.7' do
-  title 'Ensure permissions on /etc/shadow- are configured'
-  desc  "The  /etc/shadow-  file is used to store backup information about user accounts that is critical to the security of those accounts, such as the hashed password and other security information.\n\nRationale: It is critical to ensure that the /etc/shadow- file is protected from unauthorized access. Although it is protected by default, the file permissions could be changed either inadvertently or through malicious actions."
-  impact 1.0
+# control 'cis-dil-benchmark-6.1.7' do
+#   title 'Ensure permissions on /etc/shadow- are configured'
+#   desc  "The  /etc/shadow-  file is used to store backup information about user accounts that is critical to the security of those accounts, such as the hashed password and other security information.\n\nRationale: It is critical to ensure that the /etc/shadow- file is protected from unauthorized access. Although it is protected by default, the file permissions could be changed either inadvertently or through malicious actions."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:6.1.7'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:6.1.7'
+#   tag level: 1
 
-  describe file('/etc/shadow-') do
-    it { should exist }
-    it { should be_readable.by 'owner' }
-    it { should be_writable.by 'owner' }
-    it { should_not be_executable.by 'owner' }
-    it { should_not be_writable.by 'group' }
-    it { should_not be_executable.by 'group' }
-    it { should_not be_readable.by 'other' }
-    it { should_not be_writable.by 'other' }
-    it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
-    its(:sticky) { should equal false }
-    its(:suid) { should equal false }
-    its(:sgid) { should equal false }
-  end
-end
+#   describe file('/etc/shadow-') do
+#     it { should exist }
+#     it { should be_readable.by 'owner' }
+#     it { should be_writable.by 'owner' }
+#     it { should_not be_executable.by 'owner' }
+#     it { should_not be_writable.by 'group' }
+#     it { should_not be_executable.by 'group' }
+#     it { should_not be_readable.by 'other' }
+#     it { should_not be_writable.by 'other' }
+#     it { should_not be_executable.by 'other' }
+#     its(:uid) { should cmp 0 }
+#     its(:gid) { should cmp 0 }
+#     its(:sticky) { should equal false }
+#     its(:suid) { should equal false }
+#     its(:sgid) { should equal false }
+#   end
+# end
 
 control 'cis-dil-benchmark-6.1.8' do
   title 'Ensure permissions on /etc/group- are configured'
@@ -244,31 +244,31 @@ control 'cis-dil-benchmark-6.1.8' do
   end
 end
 
-control 'cis-dil-benchmark-6.1.9' do
-  title 'Ensure permissions on /etc/gshadow- are configured'
-  desc  "The /etc/gshadow- file is used to store backup information about groups that is critical to the security of those accounts, such as the hashed password and other security information.\n\nRationale: It is critical to ensure that the /etc/gshadow- file is protected from unauthorized access. Although it is protected by default, the file permissions could be changed either inadvertently or through malicious actions."
-  impact 1.0
+# control 'cis-dil-benchmark-6.1.9' do
+#   title 'Ensure permissions on /etc/gshadow- are configured'
+#   desc  "The /etc/gshadow- file is used to store backup information about groups that is critical to the security of those accounts, such as the hashed password and other security information.\n\nRationale: It is critical to ensure that the /etc/gshadow- file is protected from unauthorized access. Although it is protected by default, the file permissions could be changed either inadvertently or through malicious actions."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:6.1.9'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:6.1.9'
+#   tag level: 1
 
-  describe file('/etc/gshadow-') do
-    it { should exist }
-    it { should be_readable.by 'owner' }
-    it { should be_writable.by 'owner' }
-    it { should_not be_executable.by 'owner' }
-    it { should_not be_writable.by 'group' }
-    it { should_not be_executable.by 'group' }
-    it { should_not be_readable.by 'other' }
-    it { should_not be_writable.by 'other' }
-    it { should_not be_executable.by 'other' }
-    its(:uid) { should cmp 0 }
-    its(:gid) { should cmp 0 }
-    its(:sticky) { should equal false }
-    its(:suid) { should equal false }
-    its(:sgid) { should equal false }
-  end
-end
+#   describe file('/etc/gshadow-') do
+#     it { should exist }
+#     it { should be_readable.by 'owner' }
+#     it { should be_writable.by 'owner' }
+#     it { should_not be_executable.by 'owner' }
+#     it { should_not be_writable.by 'group' }
+#     it { should_not be_executable.by 'group' }
+#     it { should_not be_readable.by 'other' }
+#     it { should_not be_writable.by 'other' }
+#     it { should_not be_executable.by 'other' }
+#     its(:uid) { should cmp 0 }
+#     its(:gid) { should cmp 0 }
+#     its(:sticky) { should equal false }
+#     its(:suid) { should equal false }
+#     its(:sgid) { should equal false }
+#   end
+# end
 
 control 'cis-dil-benchmark-6.1.10' do
   title 'Ensure no world writable files exist'
