@@ -42,47 +42,8 @@ control 'cis-dil-benchmark-1.4.1' do
   end
 end
 
-control 'cis-dil-benchmark-1.4.2' do
-  title 'Ensure bootloader password is set. [Not compatible with Cloud Environments]'
-  desc  "Setting the boot loader password will require that anyone rebooting the system must enter a password before being able to set command line boot parameters\n\nRationale: Requiring a boot password upon execution of the boot loader will prevent an unauthorized user from entering boot parameters or changing the boot partition. This prevents users from weakening security (e.g. turning off SELinux at boot time)."
-  impact 0.0
 
-  tag cis: 'distribution-independent-linux:1.4.2'
-  tag level: 1
 
-  describe.one do
-    grub_conf.locations.each do |f|
-      describe file(f) do
-        its(:content) { should match(/^set superusers/) }
-        its(:content) { should match(/^password/) }
-      end
-    end
-  end
-end
-
-control 'cis-dil-benchmark-1.4.3' do
-  title 'Ensure authentication required for single user mode.[Not compatible with Cloud Environments]'
-  desc  "Single user mode is used for recovery when the system detects an issue during boot or by manual selection from the bootloader.\n\nRationale: Requiring authentication in single user mode prevents an unauthorized user from rebooting the system into single user to gain root privileges without credentials."
-  impact 0.0
-
-  tag cis: 'distribution-independent-linux:1.4.3'
-  tag level: 1
-
-  describe.one do
-    describe shadow.users('root') do
-      its(:passwords) { should_not include('*') }
-      its(:passwords) { should_not include('!') }
-    end
-
-    describe file('/etc/inittab') do
-      its(:content) { should match(%r{^~~:S:respawn:/sbin/sulogin}) }
-    end
-
-    describe file('/etc/sysconfig/init') do
-      its(:content) { should match(%r{^SINGLE=/sbin/sulogin$}) }
-    end
-  end
-end
 
 control 'cis-dil-benchmark-1.4.4' do
   title 'Ensure interactive boot is not enabled'
