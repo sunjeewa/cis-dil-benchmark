@@ -270,18 +270,18 @@ end
 #   end
 # end
 
-control 'cis-dil-benchmark-6.1.10' do
-  title 'Ensure no world writable files exist'
-  desc  "Unix-based systems support variable settings to control access to files. World writable files are the least secure. See the chmod(2) man page for more information.\n\nRationale: Data in world-writable files can be modified and compromised by any user on the system. World writable files may also indicate an incorrectly written script or program that could potentially be the cause of a larger compromise to the system's integrity."
-  impact 1.0
+# control 'cis-dil-benchmark-6.1.10' do
+#   title 'Ensure no world writable files exist'
+#   desc  "Unix-based systems support variable settings to control access to files. World writable files are the least secure. See the chmod(2) man page for more information.\n\nRationale: Data in world-writable files can be modified and compromised by any user on the system. World writable files may also indicate an incorrectly written script or program that could potentially be the cause of a larger compromise to the system's integrity."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:6.1.10'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:6.1.10'
+#   tag level: 1
 
-  describe command("df --local -P | awk '{ if (NR!=1) print $6 }' | xargs -I '{}' find '{}' -xdev -type f -perm -0002") do
-    its(:stdout) { should eq '' }
-  end
-end
+#   describe command("df --local -P | awk '{ if (NR!=1) print $6 }' | xargs -I '{}' find '{}' -xdev -type f -perm -0002") do
+#     its(:stdout) { should eq '' }
+#   end
+# end
 
 control 'cis-dil-benchmark-6.1.11' do
   title 'Ensure no unowned files or directories exist'
