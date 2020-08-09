@@ -217,25 +217,25 @@ control 'cis-dil-benchmark-4.2.3' do
   end
 end
 
-control 'cis-dil-benchmark-4.2.4' do
-  title 'Ensure permissions on all logfiles are configured'
-  desc  "Log files stored in /var/log/ contain logged information from many services on the system, or on log hosts others as well.\n\nRationale: It is important to ensure that log files have the correct permissions to ensure that sensitive data is archived and protected."
-  impact 1.0
+# control 'cis-dil-benchmark-4.2.4' do
+#   title 'Ensure permissions on all logfiles are configured'
+#   desc  "Log files stored in /var/log/ contain logged information from many services on the system, or on log hosts others as well.\n\nRationale: It is important to ensure that log files have the correct permissions to ensure that sensitive data is archived and protected."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:4.2.4'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:4.2.4'
+#   tag level: 1
 
-  group_write_excepts = %w[lastlog wtmp]
-  command('find /var/log -type f').stdout.split.each do |f|
-    describe file(f) do
-      it { should_not be_writable.by 'group' } unless group_write_excepts.include?(f.split('/')[-1])
-      it { should_not be_executable.by 'group' }
-      it { should_not be_readable.by 'other' }
-      it { should_not be_writable.by 'other' }
-      it { should_not be_executable.by 'other' }
-    end
-  end
-end
+#   group_write_excepts = %w[lastlog wtmp]
+#   command('find /var/log -type f').stdout.split.each do |f|
+#     describe file(f) do
+#       it { should_not be_writable.by 'group' } unless group_write_excepts.include?(f.split('/')[-1])
+#       it { should_not be_executable.by 'group' }
+#       it { should_not be_readable.by 'other' }
+#       it { should_not be_writable.by 'other' }
+#       it { should_not be_executable.by 'other' }
+#     end
+#   end
+# end
 
 control 'cis-dil-benchmark-4.3' do
   title 'Ensure logrotate is configured'
