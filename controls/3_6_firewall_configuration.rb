@@ -30,78 +30,78 @@ control 'cis-dil-benchmark-3.6.1' do
   end
 end
 
-control 'cis-dil-benchmark-3.6.2' do
-  title 'Ensure default deny firewall policy'
-  desc  "A default deny all policy on connections ensures that any unconfigured network usage will be rejected.\n\nRationale: With a default accept policy the firewall will accept any packet that is not configured to be denied. It is easier to white list acceptable usage than to black list unacceptable usage."
-  impact 1.0
+# control 'cis-dil-benchmark-3.6.2' do
+#   title 'Ensure default deny firewall policy'
+#   desc  "A default deny all policy on connections ensures that any unconfigured network usage will be rejected.\n\nRationale: With a default accept policy the firewall will accept any packet that is not configured to be denied. It is easier to white list acceptable usage than to black list unacceptable usage."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:3.6.2'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:3.6.2'
+#   tag level: 1
 
-  %w(INPUT OUTPUT FORWARD).each do |chain|
-    describe.one do
-      describe iptables do
-        it { should have_rule("-P #{chain} DROP") }
-      end
-      describe iptables do
-        it { should have_rule("-P #{chain} REJECT") }
-      end
-    end
-  end
-end
+#   %w(INPUT OUTPUT FORWARD).each do |chain|
+#     describe.one do
+#       describe iptables do
+#         it { should have_rule("-P #{chain} DROP") }
+#       end
+#       describe iptables do
+#         it { should have_rule("-P #{chain} REJECT") }
+#       end
+#     end
+#   end
+# end
 
-control 'cis-dil-benchmark-3.6.3' do
-  title 'Ensure loopback traffic is configured'
-  desc  "Configure the loopback interface to accept traffic. Configure all other interfaces to deny traffic to the loopback network (127.0.0.0/8).\n\nRationale: Loopback traffic is generated between processes on machine and is typically critical to operation of the system. The loopback interface is the only place that loopback network (127.0.0.0/8) traffic should be seen, all other interfaces should ignore traffic on this network as an anti-spoofing measure."
-  impact 1.0
+# control 'cis-dil-benchmark-3.6.3' do
+#   title 'Ensure loopback traffic is configured'
+#   desc  "Configure the loopback interface to accept traffic. Configure all other interfaces to deny traffic to the loopback network (127.0.0.0/8).\n\nRationale: Loopback traffic is generated between processes on machine and is typically critical to operation of the system. The loopback interface is the only place that loopback network (127.0.0.0/8) traffic should be seen, all other interfaces should ignore traffic on this network as an anti-spoofing measure."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:3.6.3'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:3.6.3'
+#   tag level: 1
 
-  describe iptables do
-    it { should have_rule('-A INPUT -i lo -j ACCEPT') }
-    it { should have_rule('-A OUTPUT -o lo -j ACCEPT') }
-    it { should have_rule('-A INPUT -s 127.0.0.0/8 -j DROP') }
-  end
-end
+#   describe iptables do
+#     it { should have_rule('-A INPUT -i lo -j ACCEPT') }
+#     it { should have_rule('-A OUTPUT -o lo -j ACCEPT') }
+#     it { should have_rule('-A INPUT -s 127.0.0.0/8 -j DROP') }
+#   end
+# end
 
-control 'cis-dil-benchmark-3.6.4' do
-  title 'Ensure outbound and established connections are configured'
-  desc  "Configure the firewall rules for new outbound, and established connections.\n\nRationale: If rules are not in place for new outbound, and established connections all packets will be dropped by the default policy preventing network usage."
-  impact 0.0
+# control 'cis-dil-benchmark-3.6.4' do
+#   title 'Ensure outbound and established connections are configured'
+#   desc  "Configure the firewall rules for new outbound, and established connections.\n\nRationale: If rules are not in place for new outbound, and established connections all packets will be dropped by the default policy preventing network usage."
+#   impact 0.0
 
-  tag cis: 'distribution-independent-linux:3.6.4'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:3.6.4'
+#   tag level: 1
 
-  %w(tcp udp icmp).each do |proto|
-    describe.one do
-      describe iptables do
-        it { should have_rule("-A OUTPUT -p #{proto} -m state --state NEW,ESTABLISHED -j ACCEPT") }
-        it { should have_rule("-A INPUT -p #{proto} -m state --state ESTABLISHED -j ACCEPT") }
-      end
-      describe iptables do
-        it { should have_rule("-A OUTPUT -p #{proto} -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT") }
-        it { should have_rule("-A INPUT -p #{proto} -m conntrack --ctstate ESTABLISHED -j ACCEPT") }
-      end
-    end
-  end
-end
+#   %w(tcp udp icmp).each do |proto|
+#     describe.one do
+#       describe iptables do
+#         it { should have_rule("-A OUTPUT -p #{proto} -m state --state NEW,ESTABLISHED -j ACCEPT") }
+#         it { should have_rule("-A INPUT -p #{proto} -m state --state ESTABLISHED -j ACCEPT") }
+#       end
+#       describe iptables do
+#         it { should have_rule("-A OUTPUT -p #{proto} -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT") }
+#         it { should have_rule("-A INPUT -p #{proto} -m conntrack --ctstate ESTABLISHED -j ACCEPT") }
+#       end
+#     end
+#   end
+# end
 
-control 'cis-dil-benchmark-3.6.5' do
-  title 'Ensure firewall rules exist for all open ports'
-  desc  "Any ports that have been opened on non-loopback addresses need firewall rules to govern traffic.\n\nRationale: Without a firewall rule configured for open ports default firewall policy will drop all packets to these ports."
-  impact 1.0
+# control 'cis-dil-benchmark-3.6.5' do
+#   title 'Ensure firewall rules exist for all open ports'
+#   desc  "Any ports that have been opened on non-loopback addresses need firewall rules to govern traffic.\n\nRationale: Without a firewall rule configured for open ports default firewall policy will drop all packets to these ports."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:3.6.5'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:3.6.5'
+#   tag level: 1
 
-  port.where { address !~ /^(127\.0\.0\.1|::1)$/ }.ports.each do |port|
-    describe "Firewall rule should exist for port #{port}" do
-      subject { iptables.retrieve_rules.any? { |s| s =~ /\s+--dport #{port}\s+/ } }
-      it { should be true }
-    end
-  end
-end
+#   port.where { address !~ /^(127\.0\.0\.1|::1)$/ }.ports.each do |port|
+#     describe "Firewall rule should exist for port #{port}" do
+#       subject { iptables.retrieve_rules.any? { |s| s =~ /\s+--dport #{port}\s+/ } }
+#       it { should be true }
+#     end
+#   end
+# end
 
 control 'cis-dil-benchmark-3.7' do
   title 'Ensure wireless interfaces are disabled'
