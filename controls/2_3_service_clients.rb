@@ -60,18 +60,18 @@ control 'cis-dil-benchmark-2.3.3' do
   end
 end
 
-control 'cis-dil-benchmark-2.3.4' do
-  title 'Ensure telnet client is not installed. [telnet is used for troubleshooting]'
-  desc  "The telnet package contains the telnet client, which allows users to start connections to other systems via the telnet protocol.\n\nRationale: The telnet protocol is insecure and unencrypted. The use of an unencrypted transmission medium could allow an unauthorized user to steal credentials. The ssh package provides an encrypted session and stronger security and is included in most Linux distributions."
-  impact 0.0
+# control 'cis-dil-benchmark-2.3.4' do
+#   title 'Ensure telnet client is not installed.'
+#   desc  "The telnet package contains the telnet client, which allows users to start connections to other systems via the telnet protocol.\n\nRationale: The telnet protocol is insecure and unencrypted. The use of an unencrypted transmission medium could allow an unauthorized user to steal credentials. The ssh package provides an encrypted session and stronger security and is included in most Linux distributions."
+#   impact 0.0
 
-  tag cis: 'distribution-independent-linux:2.3.4'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:2.3.4'
+#   tag level: 1
 
-  describe package('telnet') do
-    it { should_not be_installed }
-  end
-end
+#   describe package('telnet') do
+#     it { should_not be_installed }
+#   end
+# end
 
 control 'cis-dil-benchmark-2.3.5' do
   title 'Ensure LDAP client is not installed'
