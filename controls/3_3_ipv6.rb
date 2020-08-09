@@ -47,3 +47,49 @@ control 'cis-dil-benchmark-3.3.1' do
   end
 end
 
+# control 'cis-dil-benchmark-3.3.2' do
+#   title 'Ensure IPv6 redirects are not accepted'
+#   desc  "This setting prevents the system from accepting ICMP redirects. ICMP redirects tell the system about alternate routes for sending traffic.\n\nRationale: It is recommended that systems not accept ICMP redirects as they could be tricked into routing traffic to compromised machines. Setting hard routes within the system (usually a single default route to a trusted router) protects the system from bad routes."
+#   impact 0.0
+
+#   tag cis: 'distribution-independent-linux:3.3.2'
+#   tag level: 1
+
+#   only_if do
+#     ipv6_enabled = true
+
+#     grub_conf.locations.each do |f|
+#       grub_file = file(f)
+#       if !grub_file.content.nil? && grub_file.content.match(/ipv6\.disable=1/)
+#         ipv6_enabled = false
+#         break
+#       end
+#     end
+
+#     ipv6_enabled
+#   end
+
+#   %w(net.ipv6.conf.all.accept_redirects net.ipv6.conf.default.accept_redirects).each do |kp|
+#     describe kernel_parameter(kp) do
+#       its(:value) { should_not be_nil }
+#       its(:value) { should eq 0 }
+#     end
+#   end
+# end
+
+# control 'cis-dil-benchmark-3.3.3' do
+#   title 'Ensure IPv6 is disabled'
+#   desc  "Although IPv6 has many advantages over IPv4, few organizations have implemented IPv6.\n\nRationale: If IPv6 is not to be used, it is recommended that it be disabled to reduce the attack surface of the system."
+#   impact 0.0
+
+#   tag cis: 'distribution-independent-linux:3.3.3'
+#   tag level: 1
+
+#   describe.one do
+#     grub_conf.locations.each do |f|
+#       describe file(f) do
+#         its(:content) { should match(/ipv6\.disable=1/) }
+#       end
+#     end
+#   end
+# end
