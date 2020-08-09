@@ -23,97 +23,97 @@ shadow_files << '/usr/share/baselayout/shadow' if file('/etc/nsswitch.conf').con
 passwd_files = ['/etc/passwd']
 passwd_files << '/usr/share/baselayout/passwd' if file('/etc/nsswitch.conf').content =~ /^passwd:\s+(\S+\s+)*usrfiles/
 
-control 'cis-dil-benchmark-5.4.1.1' do
-  title 'Ensure password expiration is 90 days or less'
-  desc  "The PASS_MAX_DAYS parameter in /etc/login.defs allows an administrator to force passwords to expire once they reach a defined age. It is recommended that the PASS_MAX_DAYS parameter be set to less than or equal to 90 days.\n\nRationale: The window of opportunity for an attacker to leverage compromised credentials or successfully compromise credentials via an online brute force attack is limited by the age of the password. Therefore, reducing the maximum age of a password also reduces an attacker's window of opportunity."
-  impact 1.0
+# control 'cis-dil-benchmark-5.4.1.1' do
+#   title 'Ensure password expiration is 90 days or less'
+#   desc  "The PASS_MAX_DAYS parameter in /etc/login.defs allows an administrator to force passwords to expire once they reach a defined age. It is recommended that the PASS_MAX_DAYS parameter be set to less than or equal to 90 days.\n\nRationale: The window of opportunity for an attacker to leverage compromised credentials or successfully compromise credentials via an online brute force attack is limited by the age of the password. Therefore, reducing the maximum age of a password also reduces an attacker's window of opportunity."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:5.4.1.1'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:5.4.1.1'
+#   tag level: 1
 
-  describe login_defs do
-    its('PASS_MAX_DAYS') { should cmp <= 90 }
-  end
+#   describe login_defs do
+#     its('PASS_MAX_DAYS') { should cmp <= 90 }
+#   end
 
-  shadow_files.each do |f|
-    shadow(f).users(/.+/).entries.each do |user|
-      next if (user.password && %w(* !)).any?
+#   shadow_files.each do |f|
+#     shadow(f).users(/.+/).entries.each do |user|
+#       next if (user.password && %w(* !)).any?
 
-      describe user do
-        its(:max_days) { should cmp <= 90 }
-      end
-    end
-  end
-end
+#       describe user do
+#         its(:max_days) { should cmp <= 90 }
+#       end
+#     end
+#   end
+# end
 
-control 'cis-dil-benchmark-5.4.1.2' do
-  title 'Ensure minimum days between password changes is 7 or more'
-  desc  "The PASS_MIN_DAYS parameter in /etc/login.defs allows an administrator to prevent users from changing their password until a minimum number of days have passed since the last time the user changed their password. It is recommended that PASS_MIN_DAYS parameter be set to 7 or more days.\n\nRationale: By restricting the frequency of password changes, an administrator can prevent users from repeatedly changing their password in an attempt to circumvent password reuse controls."
-  impact 1.0
+# control 'cis-dil-benchmark-5.4.1.2' do
+#   title 'Ensure minimum days between password changes is 7 or more'
+#   desc  "The PASS_MIN_DAYS parameter in /etc/login.defs allows an administrator to prevent users from changing their password until a minimum number of days have passed since the last time the user changed their password. It is recommended that PASS_MIN_DAYS parameter be set to 7 or more days.\n\nRationale: By restricting the frequency of password changes, an administrator can prevent users from repeatedly changing their password in an attempt to circumvent password reuse controls."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:5.4.1.2'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:5.4.1.2'
+#   tag level: 1
 
-  describe login_defs do
-    its('PASS_MIN_DAYS') { should cmp >= 7 }
-  end
+#   describe login_defs do
+#     its('PASS_MIN_DAYS') { should cmp >= 7 }
+#   end
 
-  shadow_files.each do |f|
-    shadow(f).users(/.+/).entries.each do |user|
-      next if (user.password && %w(* !)).any?
+#   shadow_files.each do |f|
+#     shadow(f).users(/.+/).entries.each do |user|
+#       next if (user.password && %w(* !)).any?
 
-      describe user do
-        its(:min_days) { should cmp >= 7 }
-      end
-    end
-  end
-end
+#       describe user do
+#         its(:min_days) { should cmp >= 7 }
+#       end
+#     end
+#   end
+# end
 
-control 'cis-dil-benchmark-5.4.1.3' do
-  title 'Ensure password expiration warning days is 7 or more'
-  desc  "The PASS_WARN_AGE parameter in /etc/login.defs allows an administrator to notify users that their password will expire in a defined number of days. It is recommended that the PASS_WARN_AGE parameter be set to 7 or more days.\n\nRationale: Providing an advance warning that a password will be expiring gives users time to think of a secure password. Users caught unaware may choose a simple password or write it down where it may be discovered."
-  impact 1.0
+# control 'cis-dil-benchmark-5.4.1.3' do
+#   title 'Ensure password expiration warning days is 7 or more'
+#   desc  "The PASS_WARN_AGE parameter in /etc/login.defs allows an administrator to notify users that their password will expire in a defined number of days. It is recommended that the PASS_WARN_AGE parameter be set to 7 or more days.\n\nRationale: Providing an advance warning that a password will be expiring gives users time to think of a secure password. Users caught unaware may choose a simple password or write it down where it may be discovered."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:5.4.1.3'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:5.4.1.3'
+#   tag level: 1
 
-  describe login_defs do
-    its('PASS_WARN_AGE') { should cmp >= 7 }
-  end
+#   describe login_defs do
+#     its('PASS_WARN_AGE') { should cmp >= 7 }
+#   end
 
-  shadow_files.each do |f|
-    shadow(f).users(/.+/).entries.each do |user|
-      next if (user.password && %w(* !)).any?
+#   shadow_files.each do |f|
+#     shadow(f).users(/.+/).entries.each do |user|
+#       next if (user.password && %w(* !)).any?
 
-      describe user do
-        its(:warn_days) { should cmp >= 7 }
-      end
-    end
-  end
-end
+#       describe user do
+#         its(:warn_days) { should cmp >= 7 }
+#       end
+#     end
+#   end
+# end
 
-control 'cis-dil-benchmark-5.4.1.4' do
-  title 'Ensure inactive password lock is 30 days or less'
-  desc  "User accounts that have been inactive for over a given period of time can be automatically disabled. It is recommended that accounts that are inactive for 30 days after password expiration be disabled.\n\nRationale: Inactive accounts pose a threat to system security since the users are not logging in to notice failed login attempts or other anomalies."
-  impact 1.0
+# control 'cis-dil-benchmark-5.4.1.4' do
+#   title 'Ensure inactive password lock is 30 days or less'
+#   desc  "User accounts that have been inactive for over a given period of time can be automatically disabled. It is recommended that accounts that are inactive for 30 days after password expiration be disabled.\n\nRationale: Inactive accounts pose a threat to system security since the users are not logging in to notice failed login attempts or other anomalies."
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:5.4.1.4'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:5.4.1.4'
+#   tag level: 1
 
-  describe command('useradd -D') do
-    its(:stdout) { should match(/^INACTIVE=(30|[1-2][0-9]|[1-9])$/) }
-  end
+#   describe command('useradd -D') do
+#     its(:stdout) { should match(/^INACTIVE=(30|[1-2][0-9]|[1-9])$/) }
+#   end
 
-  shadow_files.each do |f|
-    shadow(f).users(/.+/).entries.each do |user|
-      next if (user.password && %w(* !)).any?
+#   shadow_files.each do |f|
+#     shadow(f).users(/.+/).entries.each do |user|
+#       next if (user.password && %w(* !)).any?
 
-      describe user do
-        its(:inactive_days) { should cmp <= 30 }
-      end
-    end
-  end
-end
+#       describe user do
+#         its(:inactive_days) { should cmp <= 30 }
+#       end
+#     end
+#   end
+# end
 
 # control 'cis-dil-benchmark-5.4.2' do
 #   title 'Ensure system accounts are non-login'
