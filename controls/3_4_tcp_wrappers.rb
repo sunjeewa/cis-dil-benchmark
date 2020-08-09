@@ -18,9 +18,9 @@
 title '3.4 TCP Wrappers'
 
 control 'cis-dil-benchmark-3.4.1' do
-  title 'Ensure TCP Wrappers is installed'
+  title 'Ensure TCP Wrappers is installed. [Redundant control]'
   desc  "TCP Wrappers provides a simple access list and standardized logging method for services capable of supporting it. In the past, services that were called from inetd and xinetd supported the use of tcp wrappers. As inetd and xinetd have been falling in disuse, any service that can support tcp wrappers will have the libwrap.so library attached to it.\n\nRationale: TCP Wrappers provide a good simple access list mechanism to services that may not have that support built in. It is recommended that all services that can support TCP Wrappers, use it."
-  impact 1.0
+  impact 0.0
 
   tag cis: 'distribution-independent-linux:3.4.1'
   tag level: 1
@@ -35,9 +35,9 @@ control 'cis-dil-benchmark-3.4.1' do
 end
 
 control 'cis-dil-benchmark-3.4.2' do
-  title 'Ensure /etc/hosts.allow is configured'
+  title 'Ensure /etc/hosts.allow is configured.[Redundant control]'
   desc  "The /etc/hosts.allow file specifies which IP addresses are permitted to connect to the host. It is intended to be used in conjunction with the /etc/hosts.deny file.\n\nRationale: The /etc/hosts.allow file supports access control by IP and helps ensure that only authorized systems can connect to the system."
-  impact 1.0
+  impact 0.0
 
   tag cis: 'distribution-independent-linux:3.4.2'
   tag level: 1
@@ -48,9 +48,9 @@ control 'cis-dil-benchmark-3.4.2' do
 end
 
 control 'cis-dil-benchmark-3.4.3' do
-  title 'Ensure /etc/hosts.deny is configured'
+  title 'Ensure /etc/hosts.deny is configured. [Redundant control]'
   desc  "The /etc/hosts.deny file specifies which IP addresses are not permitted to connect to the host. It is intended to be used in conjunction with the /etc/hosts.allow file.\n\nRationale: The /etc/hosts.deny file serves as a failsafe so that any host not specified in /etc/hosts.allow is denied access to the system."
-  impact 1.0
+  impact 0.0
 
   tag cis: 'distribution-independent-linux:3.4.3'
   tag level: 1
@@ -61,9 +61,9 @@ control 'cis-dil-benchmark-3.4.3' do
 end
 
 control 'cis-dil-benchmark-3.4.4' do
-  title 'Ensure permissions on /etc/hosts.allow are configured'
+  title 'Ensure permissions on /etc/hosts.allow are configured. [Redundant control]'
   desc  "The /etc/hosts.allow file contains networking information that is used by many applications and therefore must be readable for these applications to operate.\n\nRationale: It is critical to ensure that the /etc/hosts.allow file is protected from unauthorized write access. Although it is protected by default, the file permissions could be changed either inadvertently or through malicious actions."
-  impact 1.0
+  impact 0.0
 
   tag cis: 'distribution-independent-linux:3.4.4'
   tag level: 1
@@ -88,7 +88,7 @@ control 'cis-dil-benchmark-3.4.4' do
 end
 
 control 'cis-dil-benchmark-3.4.5' do
-  title 'Ensure permissions on /etc/hosts.deny are 644'
+  title 'Ensure permissions on /etc/hosts.deny are 644. [Redundant control]'
   desc  "The /etc/hosts.deny file contains network information that is used by many system applications and therefore must be readable for these applications to operate.\n\nRationale: It is critical to ensure that the /etc/hosts.deny file is protected from unauthorized write access. Although it is protected by default, the file permissions could be changed either inadvertently or through malicious actions."
   impact 1.0
 
