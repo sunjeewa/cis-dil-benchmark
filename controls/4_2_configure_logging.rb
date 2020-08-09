@@ -69,22 +69,22 @@ control 'cis-dil-benchmark-4.2.1.3' do
   end
 end
 
-control 'cis-dil-benchmark-4.2.1.4' do
-  title 'Ensure rsyslog is configured to send logs to a remote log host'
-  desc  "The rsyslog utility supports the ability to send logs it gathers to a remote log host running syslogd(8) or to receive messages from remote hosts, reducing administrative overhead.\n\nRationale: Storing log data on a remote host protects log integrity from local attacks. If an attacker gains root access on the local system, they could tamper with or remove log data that is stored on the local system"
-  impact 1.0
+# control 'cis-dil-benchmark-4.2.1.4' do
+#   title 'Ensure rsyslog is configured to send logs to a remote log host'
+#   desc  "The rsyslog utility supports the ability to send logs it gathers to a remote log host running syslogd(8) or to receive messages from remote hosts, reducing administrative overhead.\n\nRationale: Storing log data on a remote host protects log integrity from local attacks. If an attacker gains root access on the local system, they could tamper with or remove log data that is stored on the local system"
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:4.2.1.4'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:4.2.1.4'
+#   tag level: 1
 
-  only_if do
-    package('rsyslog').installed? || command('rsyslogd').exist?
-  end
+#   only_if do
+#     package('rsyslog').installed? || command('rsyslogd').exist?
+#   end
 
-  describe file('/etc/rsyslog.conf') do
-    its(:content) { should match(/^\s*\*\.\*\s+@/) }
-  end
-end
+#   describe file('/etc/rsyslog.conf') do
+#     its(:content) { should match(/^\s*\*\.\*\s+@/) }
+#   end
+# end
 
 control 'cis-dil-benchmark-4.2.1.5' do
   title 'Ensure remote rsyslog messages are only accepted on designated log hosts.'
@@ -155,23 +155,23 @@ control 'cis-dil-benchmark-4.2.2.3' do
   end
 end
 
-control 'cis-dil-benchmark-4.2.2.4' do
-  title 'Ensure syslog-ng is configured to send logs to a remote log host'
-  desc  "The syslog-ng utility supports the ability to send logs it gathers to a remote log host or to receive messages from remote hosts, reducing administrative overhead.\n\nRationale: Storing log data on a remote host protects log integrity from local attacks. If an attacker gains root access on the local system, they could tamper with or remove log data that is stored on the local system"
-  impact 1.0
+# control 'cis-dil-benchmark-4.2.2.4' do
+#   title 'Ensure syslog-ng is configured to send logs to a remote log host'
+#   desc  "The syslog-ng utility supports the ability to send logs it gathers to a remote log host or to receive messages from remote hosts, reducing administrative overhead.\n\nRationale: Storing log data on a remote host protects log integrity from local attacks. If an attacker gains root access on the local system, they could tamper with or remove log data that is stored on the local system"
+#   impact 1.0
 
-  tag cis: 'distribution-independent-linux:4.2.2.4'
-  tag level: 1
+#   tag cis: 'distribution-independent-linux:4.2.2.4'
+#   tag level: 1
 
-  only_if do
-    package('syslog-ng').installed? || command('syslog-ng').exist?
-  end
+#   only_if do
+#     package('syslog-ng').installed? || command('syslog-ng').exist?
+#   end
 
-  describe file('/etc/syslog-ng/syslog-ng.conf') do
-    its(:content) { should match(/^destination \S+ \{(\S+;\s*)*\};\s*(?:#.*)?$/) }
-    its(:content) { should match(/^log \{ (\S+;\s*)*destination\(\S+\); (\S+;\s*)*\};\s*(?:#.*)?$/) }
-  end
-end
+#   describe file('/etc/syslog-ng/syslog-ng.conf') do
+#     its(:content) { should match(/^destination \S+ \{(\S+;\s*)*\};\s*(?:#.*)?$/) }
+#     its(:content) { should match(/^log \{ (\S+;\s*)*destination\(\S+\); (\S+;\s*)*\};\s*(?:#.*)?$/) }
+#   end
+# end
 
 control 'cis-dil-benchmark-4.2.2.5' do
   title 'Ensure remote syslog-ng messages are only accepted on designated log hosts'
