@@ -61,9 +61,9 @@ control 'cis-dil-benchmark-2.3.3' do
 end
 
 control 'cis-dil-benchmark-2.3.4' do
-  title 'Ensure telnet client is not installed'
+  title 'Ensure telnet client is not installed. [telnet is used for troubleshooting]'
   desc  "The telnet package contains the telnet client, which allows users to start connections to other systems via the telnet protocol.\n\nRationale: The telnet protocol is insecure and unencrypted. The use of an unencrypted transmission medium could allow an unauthorized user to steal credentials. The ssh package provides an encrypted session and stronger security and is included in most Linux distributions."
-  impact 1.0
+  impact 0.0
 
   tag cis: 'distribution-independent-linux:2.3.4'
   tag level: 1
